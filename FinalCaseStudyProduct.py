@@ -4,20 +4,11 @@ import sqlite3 as db
 from tkinter import ttk as table
 
 try:
-    conn = db.connect('mydb.db')
+    conn = db.connect('myDb.db')
     print("Connection Established: Connected to myDb Database!")
     cursor = conn.cursor()
 except db.DatabaseError:
     print(db.DatabaseError)
-
-with conn:
-    cursor.execute("""CREATE TABLE IF NOT EXISTS PRODUCT_DETAILS (
-                        PRODUCT_ID INTEGER PRIMARY KEY,
-                        PRODUCT_CATEGORY VARCHAR(20),
-                        PRODUCT_NAME VARCHAR(20),
-                        PRODUCT_BRAND VARCHAR(20)
-                        );""")
-    msg.showinfo("CREATE TABLE", "Table Created Successfully!")
 
 def readData():
     cursor.execute("SELECT * FROM PRODUCT")
@@ -174,7 +165,7 @@ def executeUpdate():
         clearFields()
         enableAllFields()
         idEntry.config(state="normal")
-        msg.showerror("UPDATE DATA", "Update Failed! ProductId didn't exist in Database")
+        msg.showerror("UPDATE DATA", "Insertion Failed! ProductId already exist in Database")
         return
     productCategory = str(categoryEntry.get()).strip()
     productName = str(nameEntry.get()).strip()
@@ -182,7 +173,6 @@ def executeUpdate():
 
     cursor.execute("SELECT * FROM PRODUCT WHERE PRODUCT_ID=:id", {'id': productId})
     selectedEntry = cursor.fetchone()
-    print(selectedEntry)
     blank = 0
     if len(productCategory) == blank:
         productCategory = selectedEntry[1]
