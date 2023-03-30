@@ -11,7 +11,7 @@ except db.DatabaseError:
     print(db.DatabaseError)
 
 with conn:
-    cursor.execute("""CREATE TABLE IF NOT EXIST PRODUCT_DETAILS (
+    cursor.execute("""CREATE TABLE IF NOT EXISTS PRODUCT_DETAILS (
                         PRODUCT_ID INTEGER PRIMARY KEY,
                         PRODUCT_CATEGORY VARCHAR(20),
                         PRODUCT_NAME VARCHAR(20),
